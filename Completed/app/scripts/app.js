@@ -35,38 +35,19 @@ function onAppActivate() {
  * Function to Fetch location of International Space Station from the REST API
  * 
  */
-function fetchData() {
+async function fetchData() {
 
   // API endpoint to fetch the current location of the International Space Station
-  const API_BASE_URL = "https://api.wheretheiss.at/v1/satellites/25544/positions"
-
-  // Timestamp for current time to get the location of International Space Station for a specified time. 
-  const timestamp = new Date().getTime()
-
-  // HTTP request header
-  const headers = {
-    "Content-Type": "application/json"
-  }
-
-  // Options passed to the request method, consists of header, body and other objects with multiple functionalities
-  const options = {
-    headers
-  }
+  // const API_BASE_URL = "https://api.wheretheiss.at/v1/satellites/25544/positions"
 
   // HTTP request to get the date from the 
-  client.request.get(`${API_BASE_URL}?timestamps=${timestamp}&units=miles`, options)
-    .then(
-      function (location) {
+  try {
+    let location = await client.request.invokeTemplate("getDataFromISS", { })
+    saveInDataStorage({ 'latitude': JSON.parse(location.response).latitude, 'longitude': JSON.parse(location.response).longitude })
+  } catch (error) {
+    handleErr(error)
+  }
 
-        // Invoke the saveInDataStorage(data) function to save the location in the data storage
-        saveInDataStorage({ 'latitude': JSON.parse(location.response)[0].latitude, 'longitude': JSON.parse(location.response)[0].longitude })
-      },
-      function (error) {
-
-        // Error handling
-        handleErr(error)
-      }
-    );
 }
 
 // saveInDataStorage function goes here

@@ -1,0 +1,13 @@
+{
+  "getDataFromISS": {
+    "schema": {
+      "method": "GET",
+      "protocol": "https",
+      "host": "api.wheretheiss.at",
+      "path": "/v1/satellites/25544",
+      "headers": {
+        "Content-Type": "application/json"
+      }
+    }
+  }
+}
