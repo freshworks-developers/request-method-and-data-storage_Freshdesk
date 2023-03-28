@@ -1,6 +1,6 @@
 ## Your First App
 
-This app displays the name of the requester of a freshdesk ticket in the ticket_sidebar placeholder
+This app displays the name of the requester of a freshdesk ticket in the ticket_sidebar placeholder with platform version 2.3
 
 ### Files and Folders
     .
