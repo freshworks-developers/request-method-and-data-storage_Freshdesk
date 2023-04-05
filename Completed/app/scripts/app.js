@@ -1,7 +1,5 @@
 var client;
 
-
-
 document.onreadystatechange = function () {
   if (document.readyState === 'interactive') renderApp();
 
@@ -36,18 +34,13 @@ function onAppActivate() {
  * 
  */
 async function fetchData() {
-
-  // API endpoint to fetch the current location of the International Space Station
-  // const API_BASE_URL = "https://api.wheretheiss.at/v1/satellites/25544/positions"
-
-  // HTTP request to get the date from the 
+  // API endpoint to fetch the current location of the International Space Station defined in config/requests.json
   try {
-    let location = await client.request.invokeTemplate("getDataFromISS", { })
-    saveInDataStorage({ 'latitude': JSON.parse(location.response).latitude, 'longitude': JSON.parse(location.response).longitude })
+    let location = await client.request.invokeTemplate("getDataFromISS", {})
+    await saveInDataStorage({ 'latitude': JSON.parse(location.response).latitude, 'longitude': JSON.parse(location.response).longitude })
   } catch (error) {
     handleErr(error)
   }
-
 }
 
 // saveInDataStorage function goes here
@@ -56,17 +49,14 @@ async function fetchData() {
  * Function to save the location in data storage
  * @param {*} data Object
  */
-function saveInDataStorage(location) {
-
-  client.db.set("location", location).then(
-    function (data) {
-      showNotify("success", "Location saved successfully in the Data Storage");
-      console.info(data);
-    },
-    function (error) {
-      // failure operation
-      console.log(error)
-    });
+async function saveInDataStorage(location) {
+  try {
+    let response = await client.db.set("location", location)
+    showNotify("success", "Location saved successfully in the Data Storage");
+    console.log(response)
+  } catch (error) {
+    handleErr(error)
+  }
 }
 
 // fetchFromDataStorage function goes here
@@ -74,15 +64,14 @@ function saveInDataStorage(location) {
 /**
  * Function to fetch the location of International space station 
  */
-function fetchFromDataStorage() {
-  client.db.get("location").then(
-    function (data) {
-      showNotify('success', `The location ISS from the Data Storage is Latitude: ${data.latitude} , Longitude: ${data.longitude}`)
-      console.info('data', data);
-    },
-    function (error) {
-      handleErr(error)
-    });
+async function fetchFromDataStorage() {
+  try {
+    let location = await client.db.get("location")
+    showNotify('success', `The location ISS from the Data Storage is Latitude: ${location.latitude} , Longitude: ${location.longitude}`)
+    console.info('data', location);
+  } catch (error) {
+    handleErr(error)
+  }
 }
 
 /**
