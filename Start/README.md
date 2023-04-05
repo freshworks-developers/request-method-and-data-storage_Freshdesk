@@ -1,6 +1,6 @@
 ## Your First App
 
-This app displays the name of the requester of a freshdesk ticket in the ticket_sidebar placeholder with platform version 2.3
+This app displays the name of the requester of a freshdesk ticket in the ticket_sidebar placeholder
 
 ### Files and Folders
     .
@@ -15,6 +15,7 @@ This app displays the name of the requester of a freshdesk ticket in the ticket_
     │       └── style.css
     ├── config                    A folder to place all the configuration files
     │   └── iparams.json
+    |   └── requests.json
     └── manifest.json             A JSON file holding meta data for app to run on platform
 
-Explore [more of app sample codes](https://github.com/freshworks/marketplace-sample-apps) on the Freshworks github respository.
+Explore [more of app sample apps](https://community.developers.freshworks.com/t/freshworks-sample-apps/3604) on the Freshworks github respository.
